@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    PlaceRepository repository = new PlaceRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PlaceRepository repository = new PlaceRepository();
         RecyclerView rvPlaces = findViewById(R.id.rvPlaces);
 
         rvPlaces.setAdapter(new PlacesAdapter(repository.getPlaces()));
@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void userItemClick(int pos) {
+        Place place = repository.getByPos(pos);
         Log.i("Itemclick", "Clicked on: " + pos);
+        Log.i("Itemclick", String.valueOf(place));
     }
 }
 

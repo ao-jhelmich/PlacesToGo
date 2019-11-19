@@ -21,4 +21,8 @@ public class PlaceRepository {
             places.add(new Place("Kerk " + i, 1));
         }
     }
+
+    public Place getByPos(int pos) {
+        return places.get(pos);
+    }
 }
