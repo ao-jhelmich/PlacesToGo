@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,23 +22,19 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Inflate the custom layout
         View contactView = inflater.inflate(R.layout.item_place, parent, false);
 
-        // Return a new holder instance
-        return new ViewHolder(contactView);
+        return new ViewHolder(contactView, parent.getContext());
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Get the data model based on position
         Place place = places.get(position);
 
-        // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
         textView.setText(place.getName());
     }
@@ -47,14 +44,21 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
         return places.size();
     }
 
-    protected class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView nameTextView;
-        public Button messageButton;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView nameTextView;
+        LinearLayout ll;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView, final Context context) {
             super(itemView);
 
             nameTextView = itemView.findViewById(R.id.place_name);
+            ll = itemView.findViewById(R.id.llPlaces);
+
+            ll.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    ((MainActivity) context).userItemClick(getAdapterPosition());
+                }
+            });
         }
     }
 }

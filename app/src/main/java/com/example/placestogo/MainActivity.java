@@ -13,23 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private List<Place> places = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        PlaceRepository repository = new PlaceRepository();
         RecyclerView rvPlaces = findViewById(R.id.rvPlaces);
 
-        for (int i = 0; i < 100; i++) {
-            places.add(new Place("Kerk " + i, 1));
-        }
-
-        PlacesAdapter adapter = new PlacesAdapter(places);
-
-        rvPlaces.setAdapter(adapter);
+        rvPlaces.setAdapter(new PlacesAdapter(repository.getPlaces()));
         rvPlaces.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void userItemClick(int pos) {
+        Log.i("Itemclick", "Clicked on: " + pos);
     }
 }
 
