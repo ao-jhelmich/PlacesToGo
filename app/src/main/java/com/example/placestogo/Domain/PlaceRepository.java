@@ -1,4 +1,4 @@
-package com.example.placestogo;
+package com.example.placestogo.Domain;
 
 import java.util.ArrayList;
 import java.util.List;

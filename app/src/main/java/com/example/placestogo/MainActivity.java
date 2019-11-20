@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.placestogo.Domain.Place;
+import com.example.placestogo.Domain.PlaceRepository;
+import com.example.placestogo.Domain.PlacesAdapter;
 
 public class MainActivity extends AppCompatActivity {
     PlaceRepository repository = new PlaceRepository();
