@@ -1,4 +1,4 @@
-package com.example.placestogo.Domain;
+package com.example.placestogo.Domain.Places;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.placestogo.Domain.Place;
 import com.example.placestogo.MainActivity;
 import com.example.placestogo.R;
 

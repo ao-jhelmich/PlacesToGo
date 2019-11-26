@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.placestogo.Domain.Place;
-import com.example.placestogo.Domain.PlaceRepository;
-import com.example.placestogo.Domain.PlacesAdapter;
+import com.example.placestogo.Domain.Places.PlaceRepository;
+import com.example.placestogo.Domain.Places.PlacesAdapter;
 
 public class MainActivity extends AppCompatActivity {
     PlaceRepository repository = new PlaceRepository();

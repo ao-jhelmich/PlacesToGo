@@ -1,4 +1,6 @@
-package com.example.placestogo.Domain;
+package com.example.placestogo.Domain.Places;
+
+import com.example.placestogo.Domain.Place;
 
 import java.util.ArrayList;
 import java.util.List;

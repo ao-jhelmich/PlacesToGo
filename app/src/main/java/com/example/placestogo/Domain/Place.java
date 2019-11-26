@@ -4,12 +4,12 @@ public class Place {
     private String name;
     private int resourceId;
 
-    Place(String name, int resourceId) {
+    public Place(String name, int resourceId) {
         this.name = name;
         this.resourceId = resourceId;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
