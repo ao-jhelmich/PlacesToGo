@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.placestogo.Domain.Place;
-import com.example.placestogo.Domain.Places.PlaceRepository;
-import com.example.placestogo.Domain.Places.PlacesAdapter;
+import com.example.placestogo.domain.Place;
+import com.example.placestogo.domain.places.PlaceRepository;
+import com.example.placestogo.domain.places.PlacesAdapter;
 
 public class MainActivity extends AppCompatActivity {
     PlaceRepository repository = new PlaceRepository();

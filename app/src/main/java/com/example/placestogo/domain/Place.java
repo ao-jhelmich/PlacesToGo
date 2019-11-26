@@ -1,4 +1,4 @@
-package com.example.placestogo.Domain;
+package com.example.placestogo.domain;
 
 public class Place {
     private String name;
