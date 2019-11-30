@@ -3,7 +3,6 @@ package com.example.placestogo.domain;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.util.Log;
 
 public class CurrentLocation implements LocationListener {
     private Location location;
@@ -11,8 +10,6 @@ public class CurrentLocation implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         this.location = location;
-
-        Log.i("location", location.toString());
     }
 
     @Override

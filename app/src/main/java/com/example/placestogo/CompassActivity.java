@@ -3,6 +3,7 @@ package com.example.placestogo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +21,7 @@ public class CompassActivity extends AppCompatActivity {
 
         GPS gps = new GPS(this);
         if (gps.getLocation() != null) {
-            Log.i("location", gps.getLocation().toString());
-        } else {
-            Log.i("location", "null");
+            Toast.makeText(getApplicationContext(), gps.getLocation().toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
