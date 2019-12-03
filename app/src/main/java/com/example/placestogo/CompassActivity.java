@@ -18,8 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.placestogo.domain.GPS;
 
-import java.util.Arrays;
-
 public class CompassActivity extends AppCompatActivity implements SensorEventListener {
     private ImageView compassImage;
     private GPS gps;
@@ -36,6 +34,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_compass);
 
         compassImage = findViewById(R.id.imageViewCompass);
@@ -93,8 +92,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         return to;
     }
 
-    // Get readings from accelerometer and magnetometer. To simplify calculations,
-    // consider storing these readings as unit vectors.
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -108,25 +105,22 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         updateOrientationAngles();
     }
 
-    //https://www.javacodegeeks.com/2013/09/android-compass-code-example.html
-    //https://stackoverflow.com/questions/39975877/how-to-detect-magnetic-north-azimuth-without-magnetometer
     public void updateOrientationAngles() {
         SensorManager.getRotationMatrix(rotationMatrix, null,
                 accelerometerReading, magnetometerReading);
         SensorManager.getOrientation(rotationMatrix, orientationAngles);
 
-        float azimuthInRadians = orientationAngles[0];
-        float azimuthInDegrees = (float) Math.toDegrees(azimuthInRadians);
-        if (azimuthInDegrees < 0.0f) {
-            azimuthInDegrees += 360f;
+        int newRotation = (int) Math.toDegrees(Math.atan2((rotationMatrix[1] - rotationMatrix[3]), (rotationMatrix[0] + rotationMatrix[4])));
+        if (newRotation < 0) {
+            newRotation += 360;
         }
 
-        Toast.makeText(this, "Rotation: " + azimuthInDegrees, Toast.LENGTH_LONG).show();
-        int newRotation = Math.round(azimuthInDegrees);
+        Toast.makeText(this, "Rotation: " + newRotation, Toast.LENGTH_SHORT).show();
 
         lastRotation = rotateImage(lastRotation, newRotation);
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
 }
