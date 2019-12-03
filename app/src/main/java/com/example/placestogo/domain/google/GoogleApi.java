@@ -1,23 +1,42 @@
 package com.example.placestogo.domain.google;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 
-import com.example.placestogo.R;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.net.PlacesClient;
+import java.io.IOException;
 
-public class GoogleApi {
-    protected PlacesClient client;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class GoogleApi extends AsyncTask {
     protected Context context;
 
     public GoogleApi(Context context) {
         this.context = context;
-        this.setClient();
     }
 
-    private void setClient() {
-        Places.initialize(this.context, this.context.getString(R.string.google_api_key));
+    public Object getPlaces() {
+        OkHttpClient client = new OkHttpClient();
+        String url  = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=AIzaSyD5rPxiZ2pFYYZNUxs2a-VHd3XCdDy5QDk";
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
 
-        this.client = Places.createClient(this.context);
+        try (Response response = client.newCall(request).execute()) {
+            Log.d("getPlaces: Api", response.body().string());
+        } catch (IOException e) {
+            Log.d("getPlaces: Api", e.toString());
+        }
+
+        return null;
     }
+
+    @Override
+    protected Object doInBackground(Object[] objects) {
+        this.getPlaces();
+        return null;
+    }
+
 }
