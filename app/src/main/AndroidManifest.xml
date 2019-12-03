@@ -25,9 +25,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CompassActivity">
-
-        </activity>
+        <activity android:name=".CompassActivity"/>
     </application>
 
 </manifest>
