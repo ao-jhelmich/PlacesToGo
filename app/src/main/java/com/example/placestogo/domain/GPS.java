@@ -8,15 +8,12 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.placestogo.CompassActivity;
-
 import java.util.Objects;
 
-//https://stackoverflow.com/questions/1513485/how-do-i-get-the-current-gps-location-programmatically-in-android
-//https://stackoverflow.com/questions/42218419/how-do-i-implement-the-locationlistener
 public class GPS {
     private LocationManager locationManager;
     private CurrentLocation currentLocation;
@@ -42,12 +39,19 @@ public class GPS {
         }
     }
 
-    //TODO: Implement this in another way
-    public void isLocationEnabled() {
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+    public boolean checkGPSPermission() {
+        PackageManager pm = mContext.getPackageManager();
+        boolean GPSPermission = mContext.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                                && mContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                                && pm.hasSystemFeature(PackageManager.FEATURE_LOCATION)
+                                && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (!GPSPermission) {
+            //TODO: https://stackoverflow.com/questions/29801368/how-to-show-enable-location-dialog-like-google-maps
+
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
             alertDialog.setTitle("Enable Location");
-            alertDialog.setMessage("Your locations setting is not enabled. Please enabled it in settings menu.");
+            alertDialog.setMessage("Your locations setting is not enabled. Please enabled it in the settings menu.");
             alertDialog.setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -61,33 +65,15 @@ public class GPS {
             });
             AlertDialog alert = alertDialog.create();
             alert.show();
-        } else {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-            alertDialog.setTitle("Confirm Location");
-            alertDialog.setMessage("Your Location is enabled, please enjoy");
-            alertDialog.setNegativeButton("Back to interface", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            AlertDialog alert = alertDialog.create();
-            alert.show();
         }
-    }
 
-    public boolean checkGPSPermission() {
-        PackageManager pm = mContext.getPackageManager();
-        return mContext.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && mContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && pm.hasSystemFeature(PackageManager.FEATURE_LOCATION)
-                && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return GPSPermission;
     }
 
     public CurrentLocation getLocation() {
-        if (currentLocation != null) {
+        if (currentLocation != null && currentLocation.getLocation() != null) {
             return currentLocation;
         } else {
-            Log.e("permission", "Failed: Give permission for Location first");
             return null;
         }
     }
