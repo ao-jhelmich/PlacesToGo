@@ -34,7 +34,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_compass);
 
         compassImage = findViewById(R.id.imageViewCompass);
