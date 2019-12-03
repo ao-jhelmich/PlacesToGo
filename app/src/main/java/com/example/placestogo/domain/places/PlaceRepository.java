@@ -25,7 +25,7 @@ public class PlaceRepository {
     }
 
     private void loadPlaces() {
-        googleApi.execute("");
+//        googleApi.execute("");
 
         for (int i = 0; i < 100; i++) {
             places.add(new Place("Kerk " + i, 1));

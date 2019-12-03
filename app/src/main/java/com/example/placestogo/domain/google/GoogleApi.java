@@ -19,6 +19,7 @@ public class GoogleApi extends AsyncTask {
 
     public Object getPlaces() {
         OkHttpClient client = new OkHttpClient();
+
         String url  = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=AIzaSyD5rPxiZ2pFYYZNUxs2a-VHd3XCdDy5QDk";
         Request request = new Request.Builder()
                 .url(url)
