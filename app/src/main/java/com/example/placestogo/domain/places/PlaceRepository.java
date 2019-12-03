@@ -24,15 +24,15 @@ public class PlaceRepository {
         return places;
     }
 
-    private void loadPlaces() {
-//        googleApi.execute("");
-
-        for (int i = 0; i < 100; i++) {
-            places.add(new Place("Kerk " + i, 1));
-        }
+    public void loadPlaces() {
+        googleApi.fetchPlaces();
     }
 
     public Place getByPos(int pos) {
         return places.get(pos);
+    }
+
+    public void setPlaces(List<Place> places) {
+        this.places = places;
     }
 }

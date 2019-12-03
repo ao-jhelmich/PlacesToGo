@@ -2,26 +2,16 @@ package com.example.placestogo.domain;
 
 public class Place {
     private String name;
-    private int resourceId;
+    private String photo;
+    private String id;
 
-    public Place(String name, int resourceId) {
+    public Place(String id, String name, String photo) {
+        this.id = id;
         this.name = name;
-        this.resourceId = resourceId;
+        this.photo = photo;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(int resourceId) {
-        this.resourceId = resourceId;
     }
 }

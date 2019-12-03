@@ -23,6 +23,10 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
         this.places = places;
     }
 
+    public void setPlaces(List<Place> places) {
+        this.places = places;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

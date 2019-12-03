@@ -7,12 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.provider.Settings;
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
-
-import java.util.Objects;
 
 public class GPS {
     private LocationManager locationManager;
@@ -47,8 +42,6 @@ public class GPS {
                                 && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
         if (!GPSPermission) {
-            //TODO: https://stackoverflow.com/questions/29801368/how-to-show-enable-location-dialog-like-google-maps
-
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
             alertDialog.setTitle("Enable Location");
             alertDialog.setMessage("Your locations setting is not enabled. Please enabled it in the settings menu.");

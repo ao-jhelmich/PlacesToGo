@@ -16,16 +16,19 @@ import com.example.placestogo.domain.places.PlacesAdapter;
 
 public class MainActivity extends AppCompatActivity {
     protected PlaceRepository repository;
+    protected PlacesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.repository = new PlaceRepository(getApplicationContext());
+
+        this.repository = new PlaceRepository(this);
+        this.adapter = new PlacesAdapter(repository.getPlaces());
 
         RecyclerView rvPlaces = findViewById(R.id.rvPlaces);
 
-        rvPlaces.setAdapter(new PlacesAdapter(repository.getPlaces()));
+        rvPlaces.setAdapter(this.adapter);
         rvPlaces.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -34,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, CompassActivity.class);
         startActivity(intent);
+    }
+
+    public PlaceRepository getRepository() {
+        return this.repository;
+    }
+
+    public PlacesAdapter getAdapter() {
+        return this.adapter;
     }
 }
 

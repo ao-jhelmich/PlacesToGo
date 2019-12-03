@@ -34,11 +34,9 @@ public class CurrentLocation implements LocationListener {
     @Override
     public String toString() {
         if (location != null) {
-            return "Latitude: " + location.getLatitude() + "\n\r" +
-                    "Longitude: " + location.getLongitude() + "\n\r" +
-                    "Accuracy: " + location.getAccuracy();
+            return location.getLatitude() + "," + location.getLongitude();
         } else {
-            return "Location: null";
+            return "-33.8585416, 151.2100441";
         }
     }
 }
