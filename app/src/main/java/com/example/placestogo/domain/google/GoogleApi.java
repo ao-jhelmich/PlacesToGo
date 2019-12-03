@@ -36,8 +36,11 @@ public class GoogleApi {
         GPS gps = new GPS(this.context);
 
         //Show location in toast if not null
-        if (gps.getLocation() != null) {
-            String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ gps.getLocation().toString() +"&radius=15000&key=" + this.context.getString(R.string.google_api_key);
+//        if (gps.getLocation() != null) {
+        if (true) {
+            Log.d("Api", "fetchPlaces: ");
+//            String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ gps.getLocation().toString() +"&radius=15000&key=" + this.context.getString(R.string.google_api_key);
+            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.571913333333335,4.768321666666667&radius=15000&key=AIzaSyD5rPxiZ2pFYYZNUxs2a-VHd3XCdDy5QDk";
             Log.d("Api", url);
 
             // Request a string response from the provided URL.
@@ -50,14 +53,22 @@ public class GoogleApi {
                                 for (int i = 0; i < results.length(); i++) {
                                     JSONObject object = results.getJSONObject(i);
                                     JSONArray photos = object.getJSONArray("photos");
+                                    String photo_reference = "";
+
+                                    try {
+                                        photo_reference = photos.getJSONObject(0).getString("photo_reference");
+                                    } catch (JSONException e) {
+                                        Log.d("Api", e.getMessage());
+                                    }
 
                                     places.add(new Place(
                                         object.getString("id"),
                                         object.getString("name"),
-                                        photos.getJSONObject(0).getString("photo_reference")
+                                        photo_reference
                                     ));
                                 }
 
+                                context.getRepository().setPlaces(places);
                                 context.getAdapter().setPlaces(places);
                                 context.getAdapter().notifyDataSetChanged();
                             } catch (JSONException e) {
