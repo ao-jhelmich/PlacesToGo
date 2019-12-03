@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     public void userItemClick(int pos) {
         Place place = this.repository.getByPos(pos);
 
-        Toast.makeText(getApplicationContext(), "Clicked on: " + place.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, CompassActivity.class);
+        startActivity(intent);
     }
 }
 
