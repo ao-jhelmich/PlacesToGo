@@ -31,7 +31,7 @@ public class GPS {
 
             //Set currentLocation to last known location
             if (currentLocation.getLocation() == null) {
-                currentLocation.onLocationChanged(Objects.requireNonNull(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)));
+                currentLocation.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
             }
 
             //Request location updates for future location updates
