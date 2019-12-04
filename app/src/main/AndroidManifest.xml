@@ -28,6 +28,8 @@
         <activity android:name=".CompassActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".PlaceActivity" android:exported="true"/>
     </application>
 
 </manifest>
