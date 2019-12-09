@@ -14,6 +14,8 @@ import com.example.placestogo.domain.Place;
 import com.example.placestogo.domain.places.PlaceRepository;
 import com.example.placestogo.domain.places.PlacesAdapter;
 
+import java.io.Serializable;
+
 public class MainActivity extends AppCompatActivity {
     protected PlaceRepository repository;
     protected PlacesAdapter adapter;
@@ -35,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     public void userItemClick(int pos) {
         Place place = this.repository.getByPos(pos);
 
-        Intent intent = new Intent(this, CompassActivity.class);
+        Intent intent = new Intent(this, PlaceActivity.class);
+        intent.putExtra("placeName", place);
         startActivity(intent);
     }
 

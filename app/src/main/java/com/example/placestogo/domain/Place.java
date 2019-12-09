@@ -1,6 +1,9 @@
 package com.example.placestogo.domain;
 
-public class Place {
+import java.io.Serializable;
+
+
+public class Place implements Serializable {
     private String name;
     private String photo;
     private String id;
