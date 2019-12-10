@@ -1,7 +1,10 @@
 package com.example.placestogo.persistence;
 
+import android.os.AsyncTask;
+
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -22,6 +25,9 @@ public interface VisitedDao {
 
     @Query("SELECT * FROM Visited")
     List<Visited> getVisited();
+
+    @Query("SELECT * FROM Visited")
+    LiveData<List<Visited>> getLiveVisited();
 
     @Query("SELECT * FROM Visited WHERE visited = :visited")
     Visited getVisitedByVisited(Boolean visited);
