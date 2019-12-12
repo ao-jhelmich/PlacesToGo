@@ -1,6 +1,7 @@
 package com.example.placestogo.domain.places;
 
 import android.content.Context;
+import android.location.Location;
 
 import com.example.placestogo.domain.google.GoogleApi;
 
@@ -12,19 +13,23 @@ public class PlaceRepository {
     private GoogleApi googleApi;
 
     public PlaceRepository(Context context) {
-         googleApi = new GoogleApi(context);
+        googleApi = new GoogleApi(context);
     }
 
-    public List<Place> getPlaces() {
+    public List<Place> getPlaces(Location location) {
         if (places.isEmpty()) {
-            loadPlaces();
+            loadPlaces(location);
         }
 
         return places;
     }
 
-    public void loadPlaces() {
-        googleApi.fetchPlaces();
+    public List<Place> getPlaces() {
+        return new ArrayList<>();
+    }
+
+    public void loadPlaces(Location location) {
+        googleApi.fetchPlaces(location);
     }
 
     public Place getByPos(int pos) {

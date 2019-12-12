@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements GpsEnabled {
     protected void onPause() {
         super.onPause();
 
-        if (gps.getLocationManager() != null) { //Stop updates from GPS
+        if (gps != null && gps.getLocationManager() != null) { //Stop updates from GPS
             gps.getLocationManager().removeUpdates(gps.getLocationListener());
         }
     }
@@ -68,14 +67,16 @@ public class MainActivity extends AppCompatActivity implements GpsEnabled {
     protected void onResume() {
         super.onResume();
 
-        gps.getLocationUpdates(); //Start locationUpdates again from GPS
+        if (gps != null) {
+            gps.getLocationUpdates(); //Start locationUpdates again from GPS
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == gps.REQUEST_CODE) {
+        if (gps != null && requestCode == gps.REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 gps.getLocationUpdates();
             } else {
@@ -86,8 +87,7 @@ public class MainActivity extends AppCompatActivity implements GpsEnabled {
 
     @Override
     public void gpsLocationChanged(Location location) {
-        //Use location here
-        Toast.makeText(this, location.toString(), Toast.LENGTH_SHORT).show();
+        repository.loadPlaces(location);
     }
 }
 

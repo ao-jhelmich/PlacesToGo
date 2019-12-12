@@ -65,7 +65,9 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             sensorManager.registerListener(this, magneticField, SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
         }
 
-        gps.getLocationUpdates(); //Start locationUpdates again from GPS
+        if (gps != null) {
+            gps.getLocationUpdates(); //Start locationUpdates again from GPS
+        }
     }
 
     @Override
@@ -73,7 +75,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         super.onPause();
         sensorManager.unregisterListener(this); //Stop updates from sensor
 
-        if (gps.getLocationManager() != null) { //Stop updates from GPS
+        if (gps != null && gps.getLocationManager() != null) { //Stop updates from GPS
             gps.getLocationManager().removeUpdates(gps.getLocationListener());
         }
     }
@@ -148,7 +150,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == gps.REQUEST_CODE) {
+        if (gps != null && requestCode == gps.REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 gps.getLocationUpdates();
             } else {
