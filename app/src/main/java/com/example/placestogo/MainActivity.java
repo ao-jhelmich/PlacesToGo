@@ -1,20 +1,15 @@
 package com.example.placestogo;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.example.placestogo.domain.Place;
+import com.example.placestogo.domain.places.Place;
 import com.example.placestogo.domain.places.PlaceRepository;
 import com.example.placestogo.domain.places.PlacesAdapter;
-
-import java.io.Serializable;
 
 public class MainActivity extends AppCompatActivity {
     protected PlaceRepository repository;

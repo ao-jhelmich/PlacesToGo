@@ -1,4 +1,4 @@
-package com.example.placestogo.domain;
+package com.example.placestogo.domain.places;
 
 import java.io.Serializable;
 

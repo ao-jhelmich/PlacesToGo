@@ -10,9 +10,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.placestogo.MainActivity;
-import com.example.placestogo.R;
-import com.example.placestogo.domain.GPS;
-import com.example.placestogo.domain.Place;
+import com.example.placestogo.domain.location.GPS;
+import com.example.placestogo.domain.places.Place;
 
 import org.json.JSONArray;
 import org.json.JSONException;

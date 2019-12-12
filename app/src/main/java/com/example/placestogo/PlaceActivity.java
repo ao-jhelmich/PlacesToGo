@@ -2,7 +2,7 @@ package com.example.placestogo;
 
 import android.os.Bundle;
 import android.widget.TextView;
-import com.example.placestogo.domain.Place;
+import com.example.placestogo.domain.places.Place;
 import com.example.placestogo.persistence.Visited;
 import com.example.placestogo.persistence.VisitedDao;
 import com.example.placestogo.persistence.VisitedDatabase;

@@ -2,7 +2,6 @@ package com.example.placestogo.domain.places;
 
 import android.content.Context;
 
-import com.example.placestogo.domain.Place;
 import com.example.placestogo.domain.google.GoogleApi;
 
 import java.util.ArrayList;

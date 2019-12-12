@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.placestogo.domain.Place;
 import com.example.placestogo.MainActivity;
 import com.example.placestogo.R;
 
