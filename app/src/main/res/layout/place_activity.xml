@@ -53,4 +53,16 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/buttonCompass"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:backgroundTint="#000000"
+        android:text="GO!"
+        android:textColor="#ffffff"
+
+        android:onClick="startCompass" />
+
 </LinearLayout>
