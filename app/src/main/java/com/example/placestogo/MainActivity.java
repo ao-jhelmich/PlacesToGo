@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements GpsEnabled {
         setContentView(R.layout.activity_main);
 
         this.repository = new PlaceRepository(this);
-        this.adapter = new PlacesAdapter(repository.getPlaces());
+        this.adapter = new PlacesAdapter(this);
         this.gps = new GPS(this);
 
         RecyclerView rvPlaces = findViewById(R.id.rvPlaces);
