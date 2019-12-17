@@ -81,11 +81,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 
             ll = itemView.findViewById(R.id.llPlaces);
 
-            ll.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    ((MainActivity) context).userItemClick(getAdapterPosition());
-                }
-            });
+            ll.setOnClickListener(view -> ((MainActivity) context).userItemClick(getAdapterPosition()));
         }
     }
 }

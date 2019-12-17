@@ -8,16 +8,15 @@ public class Place implements Serializable {
     private String name;
     private String photo;
     private String id;
-    private Location location;
+    private Double lat;
+    private Double lng;
 
     public Place(String id, String name, String photo, Double lat, Double lng) {
         this.id = id;
         this.name = name;
         this.photo = photo;
-
-        this.location = new Location("");
-        this.location.setLatitude(lat);
-        this.location.setLongitude(lng);
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getName() {
@@ -25,7 +24,11 @@ public class Place implements Serializable {
     }
 
     public Location getLocation() {
-        return this.location;
+        Location location = new Location("");
+        location.setLatitude(this.lat);
+        location.setLongitude(this.lng);
+
+        return location;
     }
 
     public String getPhoto() {

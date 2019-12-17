@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity implements GpsEnabled {
 
     public void userItemClick(int pos) {
         Place place = this.repository.getByPos(pos);
-
+        Log.d("Kut", place.toString());
         Intent intent = new Intent(this, PlaceActivity.class);
         intent.putExtra("place", place);
+
         startActivity(intent);
     }
 
