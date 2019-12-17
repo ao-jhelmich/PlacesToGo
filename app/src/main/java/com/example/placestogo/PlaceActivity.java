@@ -17,6 +17,8 @@ import java.util.List;
 
 public class PlaceActivity extends AppCompatActivity {
 
+    private Place place;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -37,13 +39,13 @@ public class PlaceActivity extends AppCompatActivity {
 
         List<Visited> visiteds = visitedDao.getVisited();
         for(Visited vs : visiteds){
-            System.out.println("Visisted: " + vs.getId() + ":" + vs.isVisited());
+            System.out.println("Visited: " + vs.getId() + ":" + vs.isVisited());
         }
         ///////////////////////////
 
 
         // TODO: intent.get can produce NullPointerException
-        Place place = (Place)extra.get("placeName");
+        place = (Place) extra.get("place");
 
         // Set contentview to correct layout activity
         setContentView(R.layout.place_activity);
@@ -58,6 +60,7 @@ public class PlaceActivity extends AppCompatActivity {
 
     public void startCompass(View view) {
         Intent intent = new Intent(this, CompassActivity.class);
+        intent.putExtra("place", place);
         startActivity(intent);
     }
 }

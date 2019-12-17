@@ -4,7 +4,6 @@ import android.location.Location;
 
 import java.io.Serializable;
 
-
 public class Place implements Serializable {
     private String name;
     private String photo;
@@ -23,6 +22,10 @@ public class Place implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public Location getLocation() {
+        return this.location;
     }
 
     public String getPhoto() {

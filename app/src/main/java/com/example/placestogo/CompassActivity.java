@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.placestogo.domain.location.GPS;
 import com.example.placestogo.domain.location.GpsEnabled;
+import com.example.placestogo.domain.places.Place;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,9 +46,13 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
         gps = new GPS(this); //Initiate GPS
 
-        destination = new Location(""); //TODO: Replace this with correct location/Place object
-        destination.setLatitude(51.5852493);
-        destination.setLongitude(4.7772573);
+        Bundle extra = getIntent().getExtras();
+        if (extra != null) {
+            Place place = (Place) extra.get("place");
+            if (place != null) {
+                destination = place.getLocation();
+            }
+        }
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
     }

@@ -48,6 +48,6 @@
         android:text="GO!"
         android:textColor="#ffffff"
 
-        android:onClick="startCompass"/>
+        android:onClick="startCompass" />
 
 </LinearLayout>
