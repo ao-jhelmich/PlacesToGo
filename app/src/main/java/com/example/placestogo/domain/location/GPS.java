@@ -24,7 +24,6 @@ public class GPS {
 
     private LocationManager locationManager;
     private LocationListener locationListener;
-    private Location currentLocation;
     private GpsEnabled gpsEnabled;
     private Context context;
 

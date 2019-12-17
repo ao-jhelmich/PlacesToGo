@@ -1,5 +1,7 @@
 package com.example.placestogo.domain.places;
 
+import android.location.Location;
+
 import java.io.Serializable;
 
 
@@ -16,5 +18,9 @@ public class Place implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public Location getLocation() {
+        return new Location("");
     }
 }
