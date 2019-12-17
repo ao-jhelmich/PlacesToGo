@@ -89,7 +89,8 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     public void onSensorChanged(SensorEvent event) {
         if (currentLocation == null || destination == null) return; //Need location and destination
 
-        float degree = calculateDegree(event);
+        float degree = Math.round(calculateDegree(event));
+
 
         float difference = lastDegree - degree;
 
