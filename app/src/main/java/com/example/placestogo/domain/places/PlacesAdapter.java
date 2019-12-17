@@ -32,15 +32,11 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 
     public void setPlaces(List<Place> places) {
         this.places = places;
-        Log.d("Adapter", "set places");
-
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d("Adapter", "test");
-
         LayoutInflater inflater = LayoutInflater.from(this.context);
 
         View contactView = inflater.inflate(R.layout.item_place, parent, false);
@@ -54,7 +50,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
         String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ place.getPhoto() +"&key="+ this.context.getString(R.string.google_api_key);
         TextView textView = holder.textView;
         ImageView imageView = holder.imageView;
-        Log.d("Adapter", place.getName());
+
         textView.setText(place.getName());
 
         Picasso.get()
