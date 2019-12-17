@@ -24,10 +24,6 @@ public class PlaceRepository {
         return places;
     }
 
-    public List<Place> getPlaces() {
-        return new ArrayList<>();
-    }
-
     public void loadPlaces(Location location) {
         googleApi.fetchPlaces(location);
     }

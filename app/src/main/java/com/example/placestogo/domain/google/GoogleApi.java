@@ -22,7 +22,7 @@ import java.util.List;
 
 public class GoogleApi {
     private MainActivity context;
-    RequestQueue queue;
+    private RequestQueue queue;
 
     public GoogleApi(Context context) {
         this.context = (MainActivity) context;
@@ -35,8 +35,7 @@ public class GoogleApi {
         //Show location in toast if not null
         if (location != null) {
             Log.d("Api", "fetchPlaces: ");
-            String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ location.getLatitude() + "," + location.getLongitude() +"&radius=15000&key=" + this.context.getString(R.string.google_api_key);
-            //String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.571913333333335,4.768321666666667&radius=15000&key=AIzaSyD5rPxiZ2pFYYZNUxs2a-VHd3XCdDy5QDk";
+            String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ location.getLatitude() + "," + location.getLongitude() +"&radius=1500&key=" + this.context.getString(R.string.google_api_key);
             Log.d("Api", url);
 
             // Request a string response from the provided URL.
@@ -46,11 +45,24 @@ public class GoogleApi {
                             JSONArray results = response.getJSONArray("results");
                             for (int i = 0; i < results.length(); i++) {
                                 JSONObject object = results.getJSONObject(i);
-                                JSONArray photos = object.getJSONArray("photos");
                                 String photo_reference = "";
 
                                 try {
+                                    JSONArray photos = object.getJSONArray("photos");
                                     photo_reference = photos.getJSONObject(0).getString("photo_reference");
+                                } catch (JSONException e) {
+                                    Log.d("Api photos", e.getMessage());
+                                }
+
+                                Double lat = 0.0;
+                                Double lng = 0.0;
+
+                                try {
+                                    JSONObject locObj = object.getJSONObject("geometry").getJSONObject("location");
+
+                                    lat = locObj.getDouble("lat");
+                                    lng = locObj.getDouble("lng");
+
                                 } catch (JSONException e) {
                                     Log.d("Api", e.getMessage());
                                 }
@@ -58,17 +70,19 @@ public class GoogleApi {
                                 places.add(new Place(
                                     object.getString("id"),
                                     object.getString("name"),
-                                    photo_reference
+                                    photo_reference,
+                                    lat,
+                                    lng
                                 ));
                             }
 
-                            context.getRepository().setPlaces(places);
-                            context.getAdapter().setPlaces(places);
-                            context.getAdapter().notifyDataSetChanged();
+                            this.context.getRepository().setPlaces(places);
+                            this.context.getAdapter().setPlaces(places);
+                            this.context.getAdapter().notifyDataSetChanged();
                         } catch (JSONException e) {
-                            Log.d("Api", e.toString());
+                            Log.d("Api error", e.toString());
                         }
-                    }, error -> Log.d("Api", error.toString())
+                    }, error -> Log.d("Api  response", error.toString())
             );
 
             // Add the request to the RequestQueue.
