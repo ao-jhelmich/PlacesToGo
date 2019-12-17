@@ -34,7 +34,6 @@ public class GoogleApi {
 
         //Show location in toast if not null
         if (location != null) {
-            Log.d("Api", "fetchPlaces: ");
             String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+ location.getLatitude() + "," + location.getLongitude() +"&radius=1500&key=" + this.context.getString(R.string.google_api_key);
             Log.d("Api", url);
 
@@ -51,7 +50,7 @@ public class GoogleApi {
                                     JSONArray photos = object.getJSONArray("photos");
                                     photo_reference = photos.getJSONObject(0).getString("photo_reference");
                                 } catch (JSONException e) {
-                                    Log.d("Api photos", e.getMessage());
+                                    Log.d("Api", e.getMessage());
                                 }
 
                                 Double lat = 0.0;
@@ -80,9 +79,9 @@ public class GoogleApi {
                             this.context.getAdapter().setPlaces(places);
                             this.context.getAdapter().notifyDataSetChanged();
                         } catch (JSONException e) {
-                            Log.d("Api error", e.toString());
+                            Log.d("Api", e.toString());
                         }
-                    }, error -> Log.d("Api  response", error.toString())
+                    }, error -> Log.d("Api", error.toString())
             );
 
             // Add the request to the RequestQueue.
