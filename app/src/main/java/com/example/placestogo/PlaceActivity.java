@@ -1,16 +1,19 @@
 package com.example.placestogo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import com.example.placestogo.domain.places.Place;
 import com.example.placestogo.persistence.Visited;
 import com.example.placestogo.persistence.VisitedDao;
 import com.example.placestogo.persistence.VisitedDatabase;
 
 import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -51,5 +54,10 @@ public class PlaceActivity extends AppCompatActivity {
 
         textView.setText(place.getName());
         boolViewVisited.setText("false");
+    }
+
+    public void startCompass(View view) {
+        Intent intent = new Intent(this, CompassActivity.class);
+        startActivity(intent);
     }
 }
