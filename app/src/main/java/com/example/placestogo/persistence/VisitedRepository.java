@@ -37,5 +37,6 @@ public class VisitedRepository {
             asyncTaskDao.insert(visiteds[0]);
             return null;
         }
+
     }
 }

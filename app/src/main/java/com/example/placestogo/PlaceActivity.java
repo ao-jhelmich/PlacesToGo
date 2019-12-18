@@ -1,7 +1,7 @@
 package com.example.placestogo;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +13,6 @@ import com.example.placestogo.persistence.VisitedDao;
 import com.example.placestogo.persistence.VisitedDatabase;
 
 import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -61,5 +58,28 @@ public class PlaceActivity extends AppCompatActivity {
         Button visitedButton = findViewById(R.id.button);
 
         boolViewVisited.setText("false");
+    }
+
+    public void setVisited() {
+        /*
+        TODO: Database stuff happening here
+        */
+
+        VisitedDatabase db = Room.databaseBuilder(this, VisitedDatabase.class, "db_visited")
+                .allowMainThreadQueries()
+                .build();
+
+        Visited visited = new Visited();
+        visited.setId(this.place.getId());
+//        visited.setVisited(true);
+
+        VisitedDao visitedDao = db.getVisitedDao();
+        visitedDao.insert(visited);
+
+        Visited vsDb = visitedDao.getVisitedById(this.place.getId());
+
+        if (!vsDb.isVisited()) {
+
+        }
     }
 }

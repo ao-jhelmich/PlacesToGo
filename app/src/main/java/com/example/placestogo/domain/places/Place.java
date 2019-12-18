@@ -19,7 +19,6 @@ public class Place implements Serializable {
         this.lng = lng;
     }
 
-    public String getId() { return id; }
     public String getName() {
         return name;
     }
@@ -34,5 +33,9 @@ public class Place implements Serializable {
 
     public String getPhoto() {
         return photo;
+    }
+
+    public String getId() {
+        return id;
     }
 }
