@@ -24,7 +24,7 @@ public class VisitedRepository {
     }
 
 
-    private class insertAsyncTask extends AsyncTask<Visited, Void, Void> {
+    private static class insertAsyncTask extends AsyncTask<Visited, Void, Void> {
 
         private VisitedDao asyncTaskDao;
 

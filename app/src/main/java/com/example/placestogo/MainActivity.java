@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements GpsEnabled {
         Place place = this.repository.getByPos(pos);
         Log.d("Kut", place.toString());
         Intent intent = new Intent(this, PlaceActivity.class);
-        intent.putExtra("placeName", place);
+        intent.putExtra("place", place);
         startActivity(intent);
     }
 
