@@ -5,6 +5,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -48,7 +49,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     public void onSensorChanged(SensorEvent event) {
         // get the angle around the z-axis rotated
         float degree = Math.round(event.values[0]);
-
+        Log.d("Compass", String.valueOf(degree));
         // create a rotation animation (reverse turn degree degrees)
         RotateAnimation ra = new RotateAnimation(
                 currentDegree,
@@ -65,8 +66,8 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
         // Start the animation
         image.startAnimation(ra);
-        currentDegree = -degree;
 
+        currentDegree = -degree;
     }
 
     @Override
