@@ -2,11 +2,13 @@ package com.example.placestogo.persistence;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import org.jetbrains.annotations.NotNull;
 
 @Entity
 public class Visited {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
+    @NotNull
     private String id;
     private boolean visited;
 

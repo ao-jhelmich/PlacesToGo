@@ -1,7 +1,8 @@
 package com.example.placestogo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +12,6 @@ import com.example.placestogo.domain.places.Place;
 import com.example.placestogo.persistence.Visited;
 import com.example.placestogo.persistence.VisitedDao;
 import com.example.placestogo.persistence.VisitedDatabase;
-
-import java.util.List;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class PlaceActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
 
         // TODO: intent.get can produce NullPointerException
-        Place place = (Place)extra.get("placeName");
+        Place place = (Place)extra.get("place");
 
         // Set contentview to correct layout activity
         setContentView(R.layout.place_activity);
@@ -59,5 +58,10 @@ public class PlaceActivity extends AppCompatActivity {
         if (!vsDb.isVisited()) {
 
         }
+    }
+
+    public void startCompass(View view) {
+        Intent intent = new Intent(this, CompassActivity.class);
+        startActivity(intent);
     }
 }
