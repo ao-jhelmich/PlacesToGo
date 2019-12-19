@@ -2,6 +2,7 @@ package com.example.placestogo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ public class PlaceActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
 
         // TODO: intent.get can produce NullPointerException
-        Place place = (Place)extra.get("place");
+        place = (Place) extra.get("place");
 
         // Set contentview to correct layout activity
         setContentView(R.layout.place_activity);
@@ -34,7 +35,6 @@ public class PlaceActivity extends AppCompatActivity {
 
         textView.setText(place.getName());
         System.out.println(place.getId());
-;
     }
 
     public void setVisited() {
@@ -62,6 +62,7 @@ public class PlaceActivity extends AppCompatActivity {
 
     public void startCompass(View view) {
         Intent intent = new Intent(this, CompassActivity.class);
+        intent.putExtra("place", place);
         startActivity(intent);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.placestogo;
 
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.GeomagneticField;
@@ -11,9 +12,9 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,15 +28,28 @@ import org.jetbrains.annotations.Nullable;
 
 public class CompassActivity extends AppCompatActivity implements SensorEventListener, GpsEnabled {
     private ImageView compassImage;
+    private TextView tvDestination;
+    private TextView tvDestinationDist;
 
     private GPS gps;
     private Location currentLocation;
+    private Place place;
     private Location destination;
 
     private SensorManager sensorManager;
 
-    private float lastDegree = 0;
+    private Sensor mAccelerometer;
+    private Sensor mMagnetometer;
+    private float[] mLastAccelerometer = new float[3];
+    private float[] mLastMagnetometer = new float[3];
+    private boolean mLastAccelerometerSet = false;
+    private boolean mLastMagnetometerSet = false;
+    private float[] mR = new float[9];
+    private float[] mOrientation = new float[3];
 
+    private float currentDegree = 0f;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +57,8 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         setContentView(R.layout.activity_compass);
 
         compassImage = findViewById(R.id.imageViewCompass);
+        tvDestination = findViewById(R.id.tvDestination);
+        tvDestinationDist = findViewById(R.id.tvDestinationDist);
 
         gps = new GPS(this); //Initiate GPS
 
@@ -50,25 +66,24 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         if (extra != null) {
             Place place = (Place) extra.get("place");
             if (place != null) {
+                this.place = place;
                 destination = place.getLocation();
+
+                tvDestination.setText("Destination: " + place.getName());
             }
         }
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mMagnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        if (accelerometer != null) {
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
-        }
-        Sensor magneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        if (magneticField != null) {
-            sensorManager.registerListener(this, magneticField, SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
-        }
+        sensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_GAME);
 
         if (gps != null) {
             gps.getLocationUpdates(); //Start locationUpdates again from GPS
@@ -78,7 +93,8 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this); //Stop updates from sensor
+        sensorManager.unregisterListener(this, mAccelerometer);
+        sensorManager.unregisterListener(this, mMagnetometer);
 
         if (gps != null && gps.getLocationManager() != null) { //Stop updates from GPS
             gps.getLocationManager().removeUpdates(gps.getLocationListener());
@@ -89,51 +105,55 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     public void onSensorChanged(SensorEvent event) {
         if (currentLocation == null || destination == null) return; //Need location and destination
 
-        float degree = Math.round(calculateDegree(event));
-
-
-        float difference = lastDegree - degree;
-
-        if (difference > 2) {
-            Toast.makeText(this, "Degree: " + degree, Toast.LENGTH_SHORT).show();
-
-            rotateImage(lastDegree, degree);
+        if (event.sensor == mAccelerometer) {
+            System.arraycopy(event.values, 0, mLastAccelerometer, 0, event.values.length);
+            mLastAccelerometerSet = true;
+        } else if (event.sensor == mMagnetometer) {
+            System.arraycopy(event.values, 0, mLastMagnetometer, 0, event.values.length);
+            mLastMagnetometerSet = true;
         }
 
-        lastDegree = degree;
+        if (mLastAccelerometerSet && mLastMagnetometerSet) {
+            SensorManager.getRotationMatrix(mR, null, mLastAccelerometer, mLastMagnetometer);
+            SensorManager.getOrientation(mR, mOrientation);
+
+            float azimuthInDegrees = calculateDegree();
+
+            rotateImage(currentDegree, -azimuthInDegrees);
+
+            currentDegree = -azimuthInDegrees;
+        }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
-    private float calculateDegree(SensorEvent event) {
-        float azimuth = event.values[0];
+    private float calculateDegree() {
+        float azimuthInRadians = mOrientation[0];
+        float azimuthInDegrees = (float)(Math.round(Math.toDegrees(azimuthInRadians))+360)%360;
 
+        azimuthInDegrees = offsetDegree(azimuthInDegrees);
+
+        if (currentDegree != -azimuthInDegrees) {
+            Toast.makeText(this, "Degree: " + azimuthInDegrees, Toast.LENGTH_SHORT).show();
+        }
+
+        return azimuthInDegrees;
+    }
+
+    private float offsetDegree(float degree) {
         GeomagneticField geoField = new GeomagneticField(
-                Double.valueOf(currentLocation.getLatitude()).floatValue(),
-                Double.valueOf(currentLocation.getLongitude()).floatValue(),
-                Double.valueOf(currentLocation.getAltitude()).floatValue(),
-                System.currentTimeMillis()
-        );
+                (float) currentLocation.getLatitude(),
+                (float) currentLocation.getLongitude(),
+                (float) currentLocation.getAltitude(),
+                System.currentTimeMillis());
 
-        azimuth -= geoField.getDeclination(); //Converts magnetic north into true north
+        degree += geoField.getDeclination(); //Converts magnetic north to true north
 
-        float bearTo = currentLocation.bearingTo(destination); //Bearing towards the destination
+        float bearing = Math.round(currentLocation.bearingTo(destination)); //bearingTo returns degrees
 
-        //If the bearTo is smaller than 0, add 360 to get the rotation clockwise.
-        if (bearTo < 0) {
-            bearTo = bearTo + 360;
-        }
-
-        float degree = bearTo - azimuth;
-
-        //If the direction is smaller than 0, add 360 to get the rotation clockwise.
-        if (degree < 0) {
-            degree = degree + 360;
-        }
-
-        return degree;
+        return degree - bearing;
     }
 
     private void rotateImage(float from, float to) {
@@ -145,8 +165,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 Animation.RELATIVE_TO_SELF,
                 0.5f);
 
-        animation.setInterpolator(new LinearInterpolator()); //Smooth animation
-        animation.setDuration(500); //Duration of animation
+        animation.setDuration(250); //Duration of animation
         animation.setFillAfter(true); //Set the animation after the end of the reservation status
 
         compassImage.startAnimation(animation);
@@ -165,9 +184,13 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void gpsLocationChanged(Location location) { //Gets called when location changes in GPS
         currentLocation = location;
-        //Toast.makeText(this, "Meters to location: " + currentLocation.distanceTo(destination), Toast.LENGTH_SHORT).show();
+
+        if (destination != null) {
+            tvDestinationDist.setText(Math.round(currentLocation.distanceTo(destination)) + " meters till destination.");
+        }
     }
 }

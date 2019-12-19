@@ -37,7 +37,7 @@ public class GPS {
     private void setupLocationServices() {
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-        locationListener = new LocationChangedListener() {
+        locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 if (location != null) {
@@ -62,6 +62,16 @@ public class GPS {
 
                 }
                 Log.d("status", statusTxt);
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
             }
         };
     }
