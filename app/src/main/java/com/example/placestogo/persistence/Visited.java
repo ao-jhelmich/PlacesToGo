@@ -7,24 +7,24 @@ import org.jetbrains.annotations.NotNull;
 @Entity
 public class Visited {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NotNull
-    private String id;
-    private boolean visited;
+    private int id;
+    private String placeId;
 
-    public boolean isVisited() {
-        return visited;
-    }
-
-    public void setVisited(boolean visited) {
-        this.visited = visited;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 }

@@ -27,9 +27,6 @@ public interface VisitedDao {
     @Query("SELECT * FROM Visited")
     LiveData<List<Visited>> getLiveVisited();
 
-    @Query("SELECT * FROM Visited WHERE visited = :visited")
-    Visited getVisitedByVisited(Boolean visited);
-
-    @Query("SELECT * FROM Visited WHERE id = :id")
-    Visited getVisitedById(String id);
+    @Query("SELECT * FROM Visited WHERE placeId = :placeId")
+    Visited getVisitedByPlaceId(String placeId);
 }

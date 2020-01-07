@@ -3,4 +3,6 @@
     <string name="google_api_key">AIzaSyD5rPxiZ2pFYYZNUxs2a-VHd3XCdDy5QDk</string>
     <string name="compass_image">Compass image</string>
     <string name="destination">Destination:</string>
+    <string name="place_visited">You have been here.</string>
+    <string name="place_not_visited">You have not been here.</string>
 </resources>
