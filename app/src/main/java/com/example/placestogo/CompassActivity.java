@@ -135,10 +135,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
         azimuthInDegrees = offsetDegree(azimuthInDegrees);
 
-        if (currentDegree != -azimuthInDegrees) {
-            Toast.makeText(this, "Degree: " + azimuthInDegrees, Toast.LENGTH_SHORT).show();
-        }
-
         return azimuthInDegrees;
     }
 
@@ -153,7 +149,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
         float bearing = Math.round(currentLocation.bearingTo(destination)); //bearingTo returns degrees
 
-        return degree - bearing;
+        return Math.round(degree - bearing);
     }
 
     private void rotateImage(float from, float to) {
