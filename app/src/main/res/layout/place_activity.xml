@@ -4,65 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="0"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewVisited"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Visited: "
-            tools:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        <TextView
-            android:id="@+id/boolViewVisited"
+            android:id="@+id/placeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:layout_gravity="center"
+            android:text="Place name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#F9F9F9"
+            android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/placeImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:background="#F9F9F9"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/visitedText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Placeholder Visited"
+            android:textSize="30dp" />
 
         <Button
             android:id="@+id/button"
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="40dp"
             android:onClick="setVisited"
             android:text="I've visited this place" />
 
+        <Button
+            android:id="@+id/buttonCompass"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="20dp"
+            android:backgroundTint="#000000"
+            android:onClick="startCompass"
+
+            android:text="GO!"
+            android:textColor="#ffffff" />
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonCompass"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:backgroundTint="#000000"
-        android:text="GO!"
-        android:textColor="#ffffff"
-
-        android:onClick="startCompass" />
 
 </LinearLayout>

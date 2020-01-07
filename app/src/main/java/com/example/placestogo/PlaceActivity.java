@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import com.example.placestogo.domain.places.Place;
 import com.example.placestogo.persistence.Visited;
 import com.example.placestogo.persistence.VisitedDao;
 import com.example.placestogo.persistence.VisitedDatabase;
+import com.squareup.picasso.Picasso;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -21,28 +23,23 @@ public class PlaceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        Bundle extra = getIntent().getExtras();
 
-        // TODO: intent.get can produce NullPointerException
-        place = (Place) extra.get("place");
-
-        // Set contentview to correct layout activity
         setContentView(R.layout.place_activity);
 
-        // Get
-        TextView textView = findViewById(R.id.textView);
-        TextView boolViewVisited = findViewById(R.id.boolViewVisited);
+        this.place = (Place) getIntent().getExtras().get("place");
+        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ this.place.getPhoto() +"&key="+ getApplicationContext().getString(R.string.google_api_key);
+        TextView placeName = findViewById(R.id.placeName);
+        ImageView placeImage = findViewById(R.id.placeImage);
 
-        textView.setText(place.getName());
-        System.out.println(place.getId());
+        placeName.setText(this.place.getName());
+
+        Picasso.get()
+                .load(url)
+                .into(placeImage);
     }
 
     public void setVisited() {
-        /*
-        TODO: Database stuff happening here
-        */
-
-        VisitedDatabase db = Room.databaseBuilder(this, VisitedDatabase.class, "db_visited")
+       VisitedDatabase db = Room.databaseBuilder(this, VisitedDatabase.class, "db_visited")
                 .allowMainThreadQueries()
                 .build();
 
