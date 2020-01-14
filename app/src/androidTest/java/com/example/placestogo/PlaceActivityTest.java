@@ -1,7 +1,5 @@
 package com.example.placestogo;
 
-import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 
@@ -14,10 +12,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import static androidx.test.espresso.Espresso.onView;
 
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertTrue;
 
 public class PlaceActivityTest {
     private Place testPlace;
@@ -35,9 +40,18 @@ public class PlaceActivityTest {
             return result;
         }
     };
+    public IntentsTestRule compassActivityRule = new IntentsTestRule<>(CompassActivity.class);
 
     @Test
-    public void main_activity_has_places() {
+    public void place_activity_has_place() {
         onView(withId(R.id.placeName)).check(matches(withText(testPlace.getName())));
+    }
+
+    @Test
+    public void place_activity_redirects_to_compass_activity() {
+        onView(withId(R.id.buttonCompass)).perform(click()).check(matches(isDisplayed()));
+        onView(withId(R.id.tvDestination)).check(matches(withText(testPlace.getName()))).check(matches(isDisplayed()));
+
+        intended(hasComponent(CompassActivity.class.getName()));
     }
 }
