@@ -2,11 +2,9 @@ package com.example.placestogo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -51,11 +49,7 @@ public class PlaceActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
-        VisitedDao visitedDao = db.getVisitedDao();
-
-        Visited vsDb = visitedDao.getVisitedByPlaceId(this.place.getId());
-
-        return vsDb != null;
+        return db.checkPlaceVisited(this, this.place.getId());
     }
 
     public void checkVisited() {

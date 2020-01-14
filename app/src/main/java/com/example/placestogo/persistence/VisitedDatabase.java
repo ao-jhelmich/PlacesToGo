@@ -25,4 +25,16 @@ public abstract class VisitedDatabase extends RoomDatabase {
 
         return INSTANCE;
     }
+
+    public boolean checkPlaceVisited(Context context, String placeId) {
+        VisitedDatabase db = Room.databaseBuilder(context, VisitedDatabase.class, "db_visited")
+                .allowMainThreadQueries()
+                .build();
+
+        VisitedDao visitedDao = db.getVisitedDao();
+
+        Visited vsDb = visitedDao.getVisitedByPlaceId(placeId);
+
+        return vsDb != null;
+    }
 }
