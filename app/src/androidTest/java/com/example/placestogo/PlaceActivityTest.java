@@ -22,6 +22,7 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertTrue;
 
 public class PlaceActivityTest {
     private Place testPlace;
@@ -48,9 +49,9 @@ public class PlaceActivityTest {
 
     @Test
     public void place_activity_redirects_to_compass_activity() {
-        onView(withId(R.id.buttonCompass)).perform(click());
+        onView(withId(R.id.buttonCompass)).perform(click()).check(matches(isDisplayed()));
+        onView(withId(R.id.tvDestination)).check(matches(withText(testPlace.getName()))).check(matches(isDisplayed()));
 
         intended(hasComponent(CompassActivity.class.getName()));
-        onView(withId(R.id.tvDestination)).check(matches(withText(testPlace.getName())));
     }
 }
